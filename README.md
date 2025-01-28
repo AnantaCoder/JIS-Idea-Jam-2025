@@ -91,4 +91,4 @@ Welcome to the **Crop Prediction and Yield Optimization System**! This project l
 ## 🧩 **Installation**
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/crop-prediction-system.git
+   git clone https://github.com/AnantaCoder/JIS-Idea-Jam-2025.git
