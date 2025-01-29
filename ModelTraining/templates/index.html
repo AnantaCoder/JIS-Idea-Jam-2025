@@ -7,79 +7,103 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 50px;
-        }
-        h2 {
-            text-align: center;
-        }
-        .form-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            margin: 20px;
         }
         label {
-            margin: 10px 0;
+            display: block;
+            margin-top: 10px;
         }
         input {
+            width: 100%;
             padding: 8px;
-            margin: 5px;
-            width: 200px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
+            margin-top: 5px;
         }
         button {
-            padding: 10px;
             margin-top: 20px;
+            padding: 10px 20px;
             background-color: #4CAF50;
             color: white;
             border: none;
-            border-radius: 4px;
             cursor: pointer;
         }
         button:hover {
             background-color: #45a049;
         }
-        .prediction {
+        #prediction-result {
             margin-top: 20px;
-            font-size: 20px;
-            font-weight: bold;
+            font-size: 1.2em;
+            color: #333;
         }
     </style>
 </head>
 <body>
+    <h1>Crop Prediction</h1>
+    
+    <form id="prediction-form">
+        <label for="N">Nitrogen (N):</label>
+        <input type="number" id="N" name="N" required><br><br>
+        
+        <label for="P">Phosphorus (P):</label>
+        <input type="number" id="P" name="P" required><br><br>
+        
+        <label for="K">Potassium (K):</label>
+        <input type="number" id="K" name="K" required><br><br>
+        
+        <label for="temperature">Temperature (°C):</label>
+        <input type="number" id="temperature" name="temperature" step="0.1" required><br><br>
+        
+        <label for="humidity">Humidity (%):</label>
+        <input type="number" id="humidity" name="humidity" required><br><br>
+        
+        <label for="ph">pH level:</label>
+        <input type="number" id="ph" name="ph" step="0.1" required><br><br>
+        
+        <label for="rainfall">Rainfall (mm):</label>
+        <input type="number" id="rainfall" name="rainfall" required><br><br>
+        
+        <button type="submit">Predict Crop</button>
+    </form>
 
-    <h2>Crop Prediction Based on Soil and Weather Conditions</h2>
+    <h2>Predicted Crop:</h2>
+    <p id="prediction-result"></p>
 
-    <div class="form-container">
-        <form method="POST" action="/predict">
-            <label for="N">Nitrogen (N)</label>
-            <input type="text" id="N" name="N" required>
+    <script>
+        document.getElementById('prediction-form').addEventListener('submit', function(e) {
+            e.preventDefault();  // Prevent the form from submitting the default way
 
-            <label for="P">Phosphorus (P)</label>
-            <input type="text" id="P" name="P" required>
+            // Collect form data
+            var formData = {
+                N: document.getElementById('N').value,
+                P: document.getElementById('P').value,
+                K: document.getElementById('K').value,
+                temperature: document.getElementById('temperature').value,
+                humidity: document.getElementById('humidity').value,
+                ph: document.getElementById('ph').value,
+                rainfall: document.getElementById('rainfall').value
+            };
 
-            <label for="K">Potassium (K)</label>
-            <input type="text" id="K" name="K" required>
-
-            <label for="temperature">Temperature (°C)</label>
-            <input type="text" id="temperature" name="temperature" required>
-
-            <label for="humidity">Humidity (%)</label>
-            <input type="text" id="humidity" name="humidity" required>
-
-            <label for="ph">pH Level</label>
-            <input type="text" id="ph" name="ph" required>
-
-            <label for="rainfall">Rainfall (mm)</label>
-            <input type="text" id="rainfall" name="rainfall" required>
-
-            <button type="submit">Predict Crop</button>
-        </form>
-
-        {% if prediction_text %}
-        <div class="prediction">{{ prediction_text }}</div>
-        {% endif %}
-    </div>
-
+            // Send POST request to Flask server
+            fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())  // Parse JSON response
+            .then(data => {
+                // Display the predicted crop result
+                if (data.error) {
+                    document.getElementById('prediction-result').innerText = "Error: " + data.error;
+                } else {
+                    document.getElementById('prediction-result').innerText = data.predicted_crop;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('prediction-result').innerText = "An error occurred. Please try again.";
+            });
+        });
+    </script>
 </body>
 </html>
