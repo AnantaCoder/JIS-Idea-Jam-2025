@@ -69,9 +69,8 @@
 
     <script>
         document.getElementById('prediction-form').addEventListener('submit', function(e) {
-            e.preventDefault();  // Prevent the form from submitting the default way
+            e.preventDefault();  
 
-            // Collect form data
             var formData = {
                 N: document.getElementById('N').value,
                 P: document.getElementById('P').value,
@@ -82,7 +81,6 @@
                 rainfall: document.getElementById('rainfall').value
             };
 
-            // Send POST request to Flask server
             fetch('/predict', {
                 method: 'POST',
                 headers: {
@@ -90,9 +88,8 @@
                 },
                 body: JSON.stringify(formData)
             })
-            .then(response => response.json())  // Parse JSON response
+            .then(response => response.json())  
             .then(data => {
-                // Display the predicted crop result
                 if (data.error) {
                     document.getElementById('prediction-result').innerText = "Error: " + data.error;
                 } else {
