@@ -9,7 +9,8 @@ app = Flask(__name__)
 logging.basicConfig(level=logging.DEBUG)
 
 try:
-    model = joblib.load('RandomForestCropModel.pkl')
+    
+    model = joblib.load('Modelss/RandomForestCropModel.pkl')
     logging.info("Model loaded successfully.")
 except Exception as e:
     logging.error(f"Error loading model: {e}")
