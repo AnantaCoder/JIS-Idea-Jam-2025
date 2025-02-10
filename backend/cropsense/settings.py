@@ -40,12 +40,18 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     # config app
-    'base.apps.BaseConfig' #config for the app we are making 
+    'base.apps.BaseConfig', #config for the app we are making 
     # 'base'
+    
+    
+    # for frontend handling
+    'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -56,11 +62,16 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'cropsense.urls'
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'frontend/build/static'),
+]
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             # os.path.join(BASE_DIR, 'base/templates'),  # Add this line
+            os.path.join(BASE_DIR, 'frontend/build'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -122,9 +133,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
-
+# STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CORS_ALLOW_ALL_ORIGINS = True  # Safer default
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+]

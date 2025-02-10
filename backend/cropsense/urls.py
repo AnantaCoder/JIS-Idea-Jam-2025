@@ -14,10 +14,23 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+# from django.contrib import admin
+# from django.urls import include, path
+
+# urlpatterns = [
+#     path('admin/', admin.site.urls),
+#      path('', include('base.urls')),
+# ]
+
 from django.contrib import admin
 from django.urls import include, path
+from django.views.generic import TemplateView  # Add this for React
 
 urlpatterns = [
+    #  path('', include('base.urls')),
     path('admin/', admin.site.urls),
-     path('', include('base.urls')),
+    path('api/', include('base.urls')),  # All API routes
+    
+    # Catch-all route for React (must be last)
+    path('', TemplateView.as_view(template_name='index.html')),
 ]
