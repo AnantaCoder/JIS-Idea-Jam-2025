@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Crop Prediction</title>
+    <style>
+        :root {
+            --neon-blue: #00b4ff;
+            --neon-green: #0fff95;
+            --neon-purple: #7e00ff;
+            --dark-bg: #0c0c1e;
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 2em;
+            overflow-x: hidden;
+        }
+        
+        h1 {
+            text-align: center;
+            color: var(--neon-blue);
+            font-size: 3em;
+            text-shadow: 
+                0 0 10px var(--neon-blue),
+                0 0 20px var(--neon-blue),
+                0 0 40px var(--neon-blue);
+            animation: pulse 2s infinite alternate;
+        }
+        
+        form {
+            background-color: rgba(14, 14, 44, 0.8);
+            padding: 2em;
+            border-radius: 15px;
+            box-shadow: 
+                0 0 10px var(--neon-green),
+                0 0 20px var(--neon-purple);
+            width: 100%;
+            max-width: 500px;
+            border: 2px solid var(--neon-green);
+            transition: all 0.3s ease;
+        }
+        
+        form:hover {
+            box-shadow: 
+                0 0 15px var(--neon-green),
+                0 0 25px var(--neon-purple),
+                0 0 35px var(--neon-blue);
+        }
+        
+        label {
+            display: block;
+            margin: 1em 0 0.5em;
+            color: var(--neon-green);
+            font-weight: bold;
+            text-shadow: 0 0 5px var(--neon-green);
+        }
+        
+        input {
+            width: 95%;
+            padding: 0.8em;
+            background-color: rgba(20, 20, 50, 0.7);
+            color: white;
+            border: 2px solid var(--neon-blue);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: var(--neon-green);
+            box-shadow: 
+                0 0 10px var(--neon-blue),
+                0 0 20px var(--neon-green);
+        }
+        
+        button {
+            width: 100%;
+            padding: 1em;
+            background-color: var(--neon-purple);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            box-shadow: 
+                0 0 10px var(--neon-purple),
+                0 0 20px var(--neon-blue);
+        }
+        
+        button:hover {
+            background-color: var(--neon-blue);
+            transform: scale(1.05);
+            box-shadow: 
+                0 0 15px var(--neon-blue),
+                0 0 25px var(--neon-green);
+        }
+        
+        button:active {
+            transform: scale(0.95);
+        }
+        
+        .result {
+            text-align: center;
+            margin-top: 2em;
+            padding: 1em;
+            background-color: rgba(14, 14, 44, 0.8);
+            border-radius: 10px;
+            border: 2px solid var(--neon-blue);
+            animation: glow 1.5s infinite alternate;
+        }
+        
+        @keyframes pulse {
+            from {
+                text-shadow: 
+                    0 0 10px var(--neon-blue),
+                    0 0 20px var(--neon-blue),
+                    0 0 40px var(--neon-blue);
+            }
+            to {
+                text-shadow: 
+                    0 0 20px var(--neon-blue),
+                    0 0 30px var(--neon-blue),
+                    0 0 50px var(--neon-blue);
+            }
+        }
+        
+        @keyframes glow {
+            from {
+                box-shadow: 
+                    0 0 10px var(--neon-blue),
+                    0 0 20px var(--neon-green);
+            }
+            to {
+                box-shadow: 
+                    0 0 20px var(--neon-blue),
+                    0 0 30px var(--neon-green);
+            }
+        }
+        
+        @media (max-width: 600px) {
+            body {
+                padding: 1em;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Crop Prediction</h1>
+    <form method="post" action="{% url 'crop_prediction' %}">
+        {% csrf_token %}
+        <label for="N">Nitrogen (N):</label>
+        <input type="number" step="any" name="N" id="N" required>
+
+        <label for="P">Phosphorus (P):</label>
+        <input type="number" step="any" name="P" id="P" required>
+
+        <label for="K">Potassium (K):</label>
+        <input type="number" step="any" name="K" id="K" required>
+
+        <label for="temperature">Temperature:</label>
+        <input type="number" step="any" name="temperature" id="temperature" required>
+
+        <label for="humidity">Humidity:</label>
+        <input type="number" step="any" name="humidity" id="humidity" required>
+
+        <label for="ph">pH Level:</label>
+        <input type="number" step="any" name="ph" id="ph" required>
+
+        <label for="rainfall">Rainfall:</label>
+        <input type="number" step="any" name="rainfall" id="rainfall" required>
+
+        <button type="submit">Predict Crop</button>
+    </form>
+    
+    {% if crop_prediction %}
+        <div class="result">
+            <h2>Predicted Crop: {{ crop_prediction }}</h2>
+        </div>
+    {% endif %}
+</body>
+</html>

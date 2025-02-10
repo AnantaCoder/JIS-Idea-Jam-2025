@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CropSense.ai</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .button {
+            display: inline-block;
+            margin: 20px;
+            padding: 15px 30px;
+            font-size: 18px;
+            text-decoration: none;
+            color: white;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 8px;
+            
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to the CropSense.ai</h1>
+    <p>Please choose an option:</p>
+    <a class="button" href="{% url 'yield_prediction' %}">Yield Prediction</a>
+    <a class="button" href="{% url 'crop_prediction' %}">Crop Prediction</a>
+</body>
+</html>
