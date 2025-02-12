@@ -7,4 +7,4 @@ gunicorn
 scikit-learn
 pandas
 numpy
-corsheaders
+django-cors-headers
