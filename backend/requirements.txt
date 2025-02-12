@@ -1,0 +1,10 @@
+django
+djangorestframework
+environs
+whitenoise
+daphne
+gunicorn
+scikit-learn
+pandas
+numpy
+corsheaders
