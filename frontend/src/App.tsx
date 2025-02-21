@@ -1,24 +1,22 @@
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import Cropai from "./Pages/Cropai";
-import Homepage from "./Pages/Homepage";
-import Liveweather from "./Pages/Liveweather";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Home } from "./pages/Home";
+import { Dashboard } from "./pages/Dashboard";
+import { CropPredictor } from "./pages/CropPredictor";
+import { YieldPredictor } from "./pages/YieldPredictor";
+import { WeatherInfo } from "./pages/WeatherInfo";
 
 function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Homepage />} />
-        <Route path="/Crop-ai" element={<Cropai />} />
-        <Route path="/Live-weather" element={<Liveweather />} />
-      </Routes>
-    </Router>
-  );
+    return (
+        <Router>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/weather-info" element={<WeatherInfo />} />
+                <Route path="/crop-predictor" element={<CropPredictor />} />
+                <Route path="/yield-predictor" element={<YieldPredictor />} />
+            </Routes>
+        </Router>
+    );
 }
 
 export default App;
-
-/*<div className="min-h-screen bg-gray-900 text-white">
-      <Homepage />
-       <Cropai /> 
-      </div>
-  */
