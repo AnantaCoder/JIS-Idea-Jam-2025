@@ -6,12 +6,10 @@ import numpy as np
 import joblib
 from sklearn.preprocessing import MinMaxScaler
 
-# Load models (keep your existing loading code)
 dtr = joblib.load('TrainedMLModels/Final_CropYieldPrediction.pkl')
 preprocessor = joblib.load('TrainedMLModels/Final_ProcessorCropYield.pkl')
 crop = joblib.load('TrainedMLModels/RandomForestCropModel.pkl')
 
-# Crop scaler (keep your existing scaler code)
 crop_scaler = MinMaxScaler()
 dummy_data = np.array([[0, 0, 0, 0, 0, 0, 0], [100, 100, 100, 100, 100, 14, 300]])
 crop_scaler.fit(dummy_data)
@@ -20,7 +18,6 @@ crop_scaler.fit(dummy_data)
 def yield_prediction_api(request):
     try:
         data = request.data
-        # Convert input data to proper types
         features = np.array([
             [
                 int(data['Crop_Year']),

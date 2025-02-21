@@ -4,14 +4,11 @@ import pickle
 import sklearn
 import joblib
 
-# Print version of scikit-learn
 print(sklearn.__version__)
 
-# Loading models
 dtr = joblib.load('Modelss/Final_CropYieldPrediction.pkl')
 preprocessor = joblib.load('Modelss/Final_ProcessorCropYield.pkl')
 
-# Flask app
 app = Flask(__name__)
 
 @app.route('/')
@@ -21,7 +18,6 @@ def index():
 @app.route("/predict", methods=['POST'])
 def predict():
     if request.method == 'POST':
-        # Getting form data
         Crop_Year = int(request.form['Crop_Year'])
         Area = float(request.form['Area'])
         Production = float(request.form['Production'])
@@ -32,13 +28,10 @@ def predict():
         Season = request.form['Season']
         State = request.form['State']
 
-        # Create features array
         features = np.array([[Crop_Year, Area, Production, Annual_Rainfall, Fertilizer, Pesticide, Crop, Season, State]], dtype=object)
         
-        # Transform features with the preprocessor
         transformed_features = preprocessor.transform(features)
         
-        # Make prediction
         prediction = dtr.predict(transformed_features).reshape(1, -1)
 
         return render_template('index_yield.html', prediction=prediction[0][0])

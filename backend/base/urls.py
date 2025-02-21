@@ -15,7 +15,12 @@ from . import views
 
 
 
+
 urlpatterns = [
     path('yield-prediction/', views.yield_prediction_api),
     path('crop-prediction/', views.crop_prediction_api),
 ]
+'''
+
+http://127.0.0.1:8000/api/crop-prediction/
+'''
